@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="header">
+        <div class="list row">
+            <div class="col-md-12">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search text here..." [(ngModel)]="filter" />
+
+                </div>
+            </div>
+        </div>
+        <!--Search Functionality-->
+        <!--button class="btn btn-primary" style="float: right;margin-bottom: 10px;" >Add Employee</button-->
+        <a [routerLink]="['../employee']" class="btn btn-primary" style="float: right;margin-bottom: 10px;">Add Employee</a>
+    
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Designation</th>
+                <th>Join Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                *ngFor="let emp of employeeService.employees | filter: filter | paginate: { itemsPerPage: 5, currentPage: page }">
+                <td (click)="populateForm(emp)">{{emp.EmployeeId}}</td>
+                <td (click)="populateForm(emp)">{{emp.EmployeeName}}</td>
+                <td (click)="populateForm(emp)">{{emp.Designation}}</td>
+                <td (click)="populateForm(emp)">{{emp.DateOfJoining | date: 'dd-MM-yyyy'}}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-danger"
+                        (click)="deleteEmployee(emp.EmployeeId)">X</button>&nbsp;
+                    <button (click)="updateEmployee(emp.EmployeeId)" class="btn btn-info"
+                        style="margin-left: 10px">Edit</button>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <div class="footer">
+        <!--pagination-->
+        <pagination-controls (pageChange)="page=($event)"></pagination-controls>
+    </div>
+</div>
